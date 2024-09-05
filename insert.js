@@ -45,6 +45,10 @@ CollectionHooks.defineAdvice('insert', async function (userId, _super, instance,
         } else {
           id = id.ops && id.ops[0] && id.ops[0]._id
         }
+      } else {
+        if (doc && doc._id && doc._id._str) {
+          id = new Mongo.ObjectID(doc._id.valueOf())
+        }
       }
       doc = EJSON.clone(doc)
       doc._id = id
